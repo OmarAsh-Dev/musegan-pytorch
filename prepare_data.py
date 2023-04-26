@@ -5,6 +5,7 @@
 
 import argparse
 import os.path
+from os.path import join
 import sys
 
 import numpy as np
@@ -99,7 +100,8 @@ def main():
             name, sa_array.shape, sa_array.dtype
         )
     )
-    np.savez(name + ".npz", sa_array)
+    os.makedirs('processed_dense_array', exist_ok=True)
+    np.savez(join('processed_dense_array',name) + ".npz", sa_array)
     sa.delete(name)
 
 
