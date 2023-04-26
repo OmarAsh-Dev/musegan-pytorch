@@ -13,11 +13,13 @@ class Trainer():
 
     def __init__(
         self,
-        generator,
-        critic,
-        g_optimizer,
-        c_optimizer,
-        device: str = "cuda:0",
+        generator,#generator
+        critic,#discriminator
+        g_optimizer,#generator nn.optim
+        c_optimizer,#discriminator nn.optim
+        ckpt_path, #checkpoint path
+        device: str = "cuda:0", #torch device
+        
     ) -> None:
         """Initialize."""
         self.generator = generator.to(device)
@@ -27,8 +29,36 @@ class Trainer():
         self.g_criterion = WassersteinLoss().to(device)
         self.c_criterion = WassersteinLoss().to(device)
         self.c_penalty = GradientPenalty().to(device)
+        self.ckpt_path = ckpt_path
         self.device = device
-
+        
+    """Save model"""
+    def save_ckp(self, state, checkpoint_path):
+        """
+        state: type dict
+        checkpoint_path: path to save checkpoint
+        """
+        # save checkpoint data to the path given, checkpoint_path
+        torch.save(state, checkpoint_path)
+          
+   """ load model """
+    def load_ckp(self, checkpoint_fpath, model, optimizer):
+        """
+        checkpoint_path: path to save checkpoint
+        model: model that we want to load checkpoint parameters into       
+        optimizer: optimizer we defined in previous training
+        """
+        # load check point
+        checkpoint = torch.load(checkpoint_fpath)
+        # initialize state_dict from checkpoint to model
+        model.load_state_dict(checkpoint['state_dict'])
+        # initialize optimizer from checkpoint to optimizer
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        # initialize valid_loss_min from checkpoint to valid_loss_min
+        # return model, optimizer, epoch value, min validation loss 
+        return model, optimizer, checkpoint['epoch']
+    
+    """Training Loop Function"""
     def train(
         self,
         dataloader: Iterable,
@@ -37,6 +67,7 @@ class Trainer():
         repeat: int = 5,
         #display_step: int = 10,
         melody_groove: int = 5,
+        save_checkpoint: bool = True,
     ) -> None:
         """
         Why rand/randn?
@@ -126,7 +157,14 @@ class Trainer():
                     e_crloss += b_crloss / len(dataloader)
                     e_cploss += b_cploss / len(dataloader)
                     e_closs += b_closs / len(dataloader)
-                    
+                    #SAVE DISC MODEL STATE DICT
+                    if save_checkpoint:
+                        checkpoint = {
+                          'epoch': epoch+1,
+                          'state_dict': self.critic.state_dict(),
+                          'optimizer': self.c_optimizer.state_dict(),
+                          }
+                        save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netD-{}.pth'.format(epoch)))
                     # Train Generator
                     self.g_optimizer.zero_grad()
                     # Very important note
@@ -167,10 +205,19 @@ class Trainer():
             self.data['cfloss'].append(e_cfloss)
             self.data['crloss'].append(e_crloss)
             self.data['cploss'].append(e_cploss)
+            #SAVE GEN MODEL STATE DICT
+            if save_checkpoint:
+                checkpoint = {
+                  'epoch': epoch+1,
+                  'state_dict': self.generator.state_dict(),
+                  'optimizer': self.g_optimizer.state_dict(),
+                  }
+                save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netG-{}.pth'.format(epoch)))
             """
                 Loss Statistics
             """
             train_loader.set_postfix(losses ='Epoch: {epoch} \tGenerator loss: {:.3f} \tCritic loss: {:.3f} \tfake: {:.3f} \treal: {:.3f} \tpenalty: {:.3f}'.format(e_gloss, e_closs, e_cfloss, e_crloss, e_cploss))
+            torch.cuda.empty_cache()
             #if epoch % display_step == 0:
              #   print(f"Epoch {epoch}/{epochs} | Generator loss: {e_gloss:.3f} | Critic loss: {e_closs:.3f}")
               #  print(f"(fake: {e_cfloss:.3f}, real: {e_crloss:.3f}, penalty: {e_cploss:.3f})")
