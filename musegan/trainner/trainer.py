@@ -2,7 +2,7 @@
 
 from typing import Iterable
 
-import torch
+import torch,os
 from torch import nn
 from tqdm.notebook import tqdm
 from .criterion import WassersteinLoss, GradientPenalty
