@@ -86,6 +86,7 @@ class MuseGenerator(nn.Module):
             Preprocessed input batch.
 
         """
+        # Very important note
         # chords shape: (batch_size, z_dimension)
         # style shape: (batch_size, z_dimension)
         # melody shape: (batch_size, n_tracks, z_dimension)
@@ -105,5 +106,6 @@ class MuseGenerator(nn.Module):
             track_out = torch.cat(track_outs, dim=1)
             bar_outs.append(track_out)
         out = torch.cat(bar_outs, dim=2)
-        # out shape: (batch_size, n_tracks, n_bars, n_steps_per_bar, n_pitches)
+        # Very important note
+        # The tensor output shape: (batch_size, n_tracks, n_bars, n_steps_per_bar, n_pitches) 
         return out

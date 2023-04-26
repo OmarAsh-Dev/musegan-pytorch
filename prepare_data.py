@@ -65,6 +65,7 @@ def main():
         sa_array = create_shared_array(name, data.shape, data.dtype)
         print("Saving data to shared memory...")
         np.copyto(sa_array, data)
+    # for some reason this doesnt work with the original data so avoid the large train train_x_lpd_5.phr.npz dense data
     else:
         with np.load(filepath) as loaded:
             sa_array = create_shared_array(name, loaded["shape"], dtype)
@@ -72,12 +73,32 @@ def main():
             sa_array[[x for x in loaded["nonzero"]]] = 1
 
     print(
-        "Successfully saved: (name='{}', shape={}, dtype={})".format(
+        "original shape: (name='{}', shape={}, dtype={})".format(
             name, sa_array.shape, sa_array.dtype
         )
     )
-    # (102378, 4, 48, 84, 5) -> (102378, 4, 5, 48, 84)
-    sa_array = sa_array.transpose(0, 1, 4, 2, 3)
+    '''
+
+    -Given you have a Piano-roll Dataset with shape :
+        num of phrases:102378,
+        num of bar:4,
+        time resolution:48,
+        pitch range:84,
+        num of tracks:5
+    summary;(102378, 4, 48, 84, 5)
+    
+    -You will need to transpose it to match the Generator/Critic random noise with tensor dimensions:
+     (batch_size, n_tracks, n_bars, n_steps_per_bar, n_pitches).
+    i.e (102378, 5, 4, 48, 84)
+
+    -Therefore: (102378, 4, 48, 84, 5) -> (102378, 5, 4, 48, 84)
+    '''
+    sa_array = sa_array.transpose(0, 4, 1, 2, 3)
+    print(
+        "Transposed shape: (name='{}', shape={}, dtype={})".format(
+            name, sa_array.shape, sa_array.dtype
+        )
+    )
     np.savez(name + ".npz", sa_array)
     sa.delete(name)
 

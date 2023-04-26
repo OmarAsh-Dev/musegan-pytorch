@@ -1,10 +1,12 @@
 """Temporal Network."""
 
 from torch import Tensor
-
 import torch
 from torch import nn
+import sys, os
 from .utils import Reshape
+
+
 
 
 class TemporalNetwork(nn.Module):

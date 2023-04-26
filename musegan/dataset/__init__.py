@@ -1,5 +1,5 @@
 """Dataset."""
 
-from .utils import LPDDataset, MidiDataset
+from .data_utils import LPDDataset, MidiDataset
 
 __all__ = ["LPDDataset", "MidiDataset"]

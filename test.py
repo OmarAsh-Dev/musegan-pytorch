@@ -1,0 +1,1 @@
+from musegan.trainner.criterion import WassersteinLoss,GradientPenalty
