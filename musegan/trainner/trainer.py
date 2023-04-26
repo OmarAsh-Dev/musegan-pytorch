@@ -29,7 +29,7 @@ class Trainer():
         self.g_criterion = WassersteinLoss().to(device)
         self.c_criterion = WassersteinLoss().to(device)
         self.c_penalty = GradientPenalty().to(device)
-        self.ckpt_path = os.makedirs(ckpt_path, exist_ok=True)
+        self.ckpt_path = ckpt_path
         self.device = device
         
     """Save model"""
@@ -78,6 +78,7 @@ class Trainer():
         melody_groove: int = 5,
         save_checkpoint: bool = True,
     ) -> None:
+        os.makedirs(self.ckpt_path, exist_ok=True)
         """
         Why rand/randn?
                 - First, as you see from the documentation numpy.random.randn
@@ -221,7 +222,7 @@ class Trainer():
                   'state_dict': self.generator.state_dict(),
                   'optimizer': self.g_optimizer.state_dict(),
                   }
-                save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netG-{}.pth'.format(epoch)))
+                self.save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netG-{}.pth'.format(epoch)))
             """
                 Loss Statistics
             """
