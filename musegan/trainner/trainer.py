@@ -173,7 +173,7 @@ class Trainer():
                           'state_dict': self.critic.state_dict(),
                           'optimizer': self.c_optimizer.state_dict(),
                           }
-                        save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netD-{}.pth'.format(epoch)))
+                        self.save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netD-{}.pth'.format(epoch)))
                     # Train Generator
                     self.g_optimizer.zero_grad()
                     # Very important note
