@@ -45,7 +45,7 @@ class Trainer():
             # save checkpoint data to the path given, checkpoint_path
             torch.save(state, checkpoint_path)
           
-   """ load model """
+    """ load model """
     def load_ckp(
         self,
         checkpoint_fpath,
