@@ -2,7 +2,7 @@
 # ----------------------------------------------------------------------------------
 # Modified from: https://github.com/salu133445/musegan/blob/main/src/process_data.py
 # ----------------------------------------------------------------------------------
-
+""" comments made by clifford"""
 import argparse
 import os.path
 from os.path import join

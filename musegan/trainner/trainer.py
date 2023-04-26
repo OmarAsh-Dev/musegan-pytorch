@@ -29,7 +29,7 @@ class Trainer():
         self.g_criterion = WassersteinLoss().to(device)
         self.c_criterion = WassersteinLoss().to(device)
         self.c_penalty = GradientPenalty().to(device)
-        self.ckpt_path = ckpt_path
+        self.ckpt_path = os.makedirs(ckpt_path, exist_ok=True)
         self.device = device
         
     """Save model"""
