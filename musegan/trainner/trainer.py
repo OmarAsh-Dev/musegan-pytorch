@@ -33,30 +33,39 @@ class Trainer():
         self.device = device
         
     """Save model"""
-    def save_ckp(self, state, checkpoint_path):
-        """
-        state: type dict
-        checkpoint_path: path to save checkpoint
-        """
-        # save checkpoint data to the path given, checkpoint_path
-        torch.save(state, checkpoint_path)
+    def save_ckp(
+        self,
+        state,
+        checkpoint_path,
+        ) -> None:
+            """
+            state: type dict
+            checkpoint_path: path to save checkpoint
+            """
+            # save checkpoint data to the path given, checkpoint_path
+            torch.save(state, checkpoint_path)
           
    """ load model """
-    def load_ckp(self, checkpoint_fpath, model, optimizer):
-        """
-        checkpoint_path: path to save checkpoint
-        model: model that we want to load checkpoint parameters into       
-        optimizer: optimizer we defined in previous training
-        """
-        # load check point
-        checkpoint = torch.load(checkpoint_fpath)
-        # initialize state_dict from checkpoint to model
-        model.load_state_dict(checkpoint['state_dict'])
-        # initialize optimizer from checkpoint to optimizer
-        optimizer.load_state_dict(checkpoint['optimizer'])
-        # initialize valid_loss_min from checkpoint to valid_loss_min
-        # return model, optimizer, epoch value, min validation loss 
-        return model, optimizer, checkpoint['epoch']
+    def load_ckp(
+        self,
+        checkpoint_fpath,
+        model,
+        optimizer,
+        ) -> None:
+            """
+            checkpoint_path: path to save checkpoint
+            model: model that we want to load checkpoint parameters into       
+            optimizer: optimizer we defined in previous training
+            """
+            # load check point
+            checkpoint = torch.load(checkpoint_fpath)
+            # initialize state_dict from checkpoint to model
+            model.load_state_dict(checkpoint['state_dict'])
+            # initialize optimizer from checkpoint to optimizer
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            # initialize valid_loss_min from checkpoint to valid_loss_min
+            # return model, optimizer, epoch value, min validation loss 
+            return model, optimizer, checkpoint['epoch']
     
     """Training Loop Function"""
     def train(
@@ -65,7 +74,7 @@ class Trainer():
         epochs: int = 500,
         batch_size: int = 64,
         repeat: int = 5,
-        #display_step: int = 10,
+        #(deprecated)display_step: int = 10,
         melody_groove: int = 5,
         save_checkpoint: bool = True,
     ) -> None:
@@ -218,6 +227,6 @@ class Trainer():
             """
             train_loader.set_postfix(losses ='Epoch: {epoch} \tGenerator loss: {:.3f} \tCritic loss: {:.3f} \tfake: {:.3f} \treal: {:.3f} \tpenalty: {:.3f}'.format(e_gloss, e_closs, e_cfloss, e_crloss, e_cploss))
             torch.cuda.empty_cache()
-            #if epoch % display_step == 0:
-             #   print(f"Epoch {epoch}/{epochs} | Generator loss: {e_gloss:.3f} | Critic loss: {e_closs:.3f}")
-              #  print(f"(fake: {e_cfloss:.3f}, real: {e_crloss:.3f}, penalty: {e_cploss:.3f})")
+            #(deprecated)if epoch % display_step == 0:
+             #(deprecated)   print(f"Epoch {epoch}/{epochs} | Generator loss: {e_gloss:.3f} | Critic loss: {e_closs:.3f}")
+              #(deprecated)  print(f"(fake: {e_cfloss:.3f}, real: {e_crloss:.3f}, penalty: {e_cploss:.3f})")
