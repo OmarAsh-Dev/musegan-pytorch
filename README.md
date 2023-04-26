@@ -2,7 +2,7 @@ MuseGAN
 =========
 A Pytorch implementation of MuseGAN
 
-[Check out the generated piano music](https://akanametov.github.io/musegan/)
+[Check out the generated piano music](#)
 
 :star: Star this project on GitHub — it helps!
 
@@ -17,13 +17,11 @@ generate music.
 
 ## Training 
 
-See [demo](https://github.com/akanametov/musegan/blob/dev/demo/demo.ipynb) for more details of training process.
-* The model components and utils are under `gan` folder.
-* The Midi dataset is under `data/utils.py`.
-* The MuseGAN model wrapper is under `musegan.py`.
+See [demo](#) for more details of training process.
+* The model components and utils are under `musegan/archs` folder.
+* The Midi `torch.utils.dataset` is under `musegan/dataset/data_utils.py`.
+* The training Functions and criterions can be found in the `musegan/trainner1 folder
 
-
-To start training your own MuseGAN simply run `train.py` script with needed parameters.
 
 ##### `Generator` and `Critic` losses
 
