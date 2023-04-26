@@ -174,7 +174,7 @@ class Trainer():
                           'state_dict': self.critic.state_dict(),
                           'optimizer': self.c_optimizer.state_dict(),
                           }
-                        self.save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netD-{}.pth'.format(epoch)))
+                        self.save_ckp(checkpoint, os.path.join(self.ckpt_path, 'museGAN_netD-{}.pth'.format(epoch)))
                     # Train Generator
                     self.g_optimizer.zero_grad()
                     # Very important note
@@ -222,7 +222,7 @@ class Trainer():
                   'state_dict': self.generator.state_dict(),
                   'optimizer': self.g_optimizer.state_dict(),
                   }
-                self.save_ckp(checkpoint, True, os.path.join(self.ckpt_path, 'museGAN_netG-{}.pth'.format(epoch)))
+                self.save_ckp(checkpoint, os.path.join(self.ckpt_path, 'museGAN_netG-{}.pth'.format(epoch)))
             """
                 Loss Statistics
             """
