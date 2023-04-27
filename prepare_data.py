@@ -1,7 +1,4 @@
 """Load and save an array to shared memory."""
-# ----------------------------------------------------------------------------------
-# Modified from: https://github.com/salu133445/musegan/blob/main/src/process_data.py
-# ----------------------------------------------------------------------------------
 """ comments made by clifford"""
 import argparse
 import os.path
@@ -62,10 +59,31 @@ def main():
     print("Loading data from '{}'.".format(filepath))
     if filepath.endswith(".npy"):
         data = np.load(filepath)
-        data = data.astype(dtype)
-        sa_array = create_shared_array(name, data.shape, data.dtype)
-        print("Saving data to shared memory...")
-        np.copyto(sa_array, data)
+        #assert shape
+        if len(data.shape) == 6:
+            RESHAPE_PARAMS = {    # Data
+                'num_bar': 4,
+                'num_beat': 4,
+                'num_pitch': 84,
+                'num_track': 8,
+                'num_timestep': 96,
+                'beat_resolution': 24,
+                'lowest_pitch': 24, # MIDI note number of the lowest pitch in data tensors
+            }
+            data = data.reshape(-1, RESHAPE_PARAMS['num_bar'], RESHAPE_PARAMS['num_timestep'],
+            RESHAPE_PARAMS['num_pitch'], RESHAPE_PARAMS['num_track'])
+            #continue ...
+            data = data.astype(dtype)
+            sa_array = create_shared_array(name, data.shape, data.dtype)
+            print("Saving data to shared memory...")
+            np.copyto(sa_array, data)
+            
+        else:
+            data = data.astype(dtype)
+            sa_array = create_shared_array(name, data.shape, data.dtype)
+            print("Saving data to shared memory...")
+            np.copyto(sa_array, data)
+            
     # for some reason this doesnt work with the original data so avoid the large train train_x_lpd_5.phr.npz dense data
     else:
         with np.load(filepath) as loaded:

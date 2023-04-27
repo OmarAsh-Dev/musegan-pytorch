@@ -75,7 +75,7 @@ class Trainer():
         batch_size: int = 64,
         repeat: int = 5,
         #(deprecated)display_step: int = 10,
-        melody_groove: int = 5,
+        melody_groove: int = 4,
         save_checkpoint: bool = True,
     ) -> None:
         os.makedirs(self.ckpt_path, exist_ok=True)
