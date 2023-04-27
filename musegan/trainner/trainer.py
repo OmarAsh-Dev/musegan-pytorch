@@ -207,9 +207,8 @@ class Trainer():
                     """
                     self.g_optimizer.step()
                     e_gloss += b_gloss.item() / len(train_loader)
-                    
-                    train_loader.set_postfix(losses='Epoch: {epoch} \tGenerator loss: {e_gloss:.3f}\tCritic loss: {e_closs:.3f}')
-                    train_loader.set_postfix(penalties='tfake: {e_cfloss:.3f}\treal: {e_crloss:.3f}\tpenalty: {e_cploss:.3f}')
+                    train_loader.set_postfix(losses='Epoch: {epoch} | Generator loss: {:.3f} | Critic loss: {:.3f} | fake: {:.3f} | real: {:.3f} | penalty: {:.3f}'.format(e_gloss, e_closs, e_cfloss, e_crloss, e_cploss))
+            
             """
             Append Losses
             """
