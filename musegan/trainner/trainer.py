@@ -163,10 +163,10 @@ class Trainer():
                     """
                     Append the critic losses
                     """
-                    e_cfloss += b_cfloss / len(dataloader)
-                    e_crloss += b_crloss / len(dataloader)
-                    e_cploss += b_cploss / len(dataloader)
-                    e_closs += b_closs / len(dataloader)
+                    e_cfloss += b_cfloss / len(train_loader)
+                    e_crloss += b_crloss / len(train_loader)
+                    e_cploss += b_cploss / len(train_loader)
+                    e_closs += b_closs / len(train_loader)
                     #SAVE DISC MODEL STATE DICT
                     if save_checkpoint:
                         checkpoint = {
@@ -206,7 +206,7 @@ class Trainer():
                     # update critic parameters
                     """
                     self.g_optimizer.step()
-                    e_gloss += b_gloss.item() / len(dataloader)
+                    e_gloss += b_gloss.item() / len(train_loader)
             """
             Append Losses
             """
@@ -226,7 +226,8 @@ class Trainer():
             """
                 Loss Statistics
             """
-            train_loader.set_postfix(losses ='Epoch: {epoch} \tGenerator loss: {:.3f} \tCritic loss: {:.3f} \tfake: {:.3f} \treal: {:.3f} \tpenalty: {:.3f}'.format(e_gloss, e_closs, e_cfloss, e_crloss, e_cploss))
+            train_loader.set_postfix(losses='Epoch: {epoch} \tGenerator loss: {e_gloss:.3f}\tCritic loss: {e_closs:.3f}')
+            train_loader.set_postfix(penalties='tfake: {e_cfloss:.3f}\treal: {e_crloss:.3f}\tpenalty: {e_cploss:.3f}')
             torch.cuda.empty_cache()
             #(deprecated)if epoch % display_step == 0:
              #(deprecated)   print(f"Epoch {epoch}/{epochs} | Generator loss: {e_gloss:.3f} | Critic loss: {e_closs:.3f}")
