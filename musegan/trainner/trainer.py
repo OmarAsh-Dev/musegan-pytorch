@@ -207,6 +207,9 @@ class Trainer():
                     """
                     self.g_optimizer.step()
                     e_gloss += b_gloss.item() / len(train_loader)
+                    
+                    train_loader.set_postfix(losses='Epoch: {epoch} \tGenerator loss: {e_gloss:.3f}\tCritic loss: {e_closs:.3f}')
+                    train_loader.set_postfix(penalties='tfake: {e_cfloss:.3f}\treal: {e_crloss:.3f}\tpenalty: {e_cploss:.3f}')
             """
             Append Losses
             """
@@ -226,8 +229,6 @@ class Trainer():
             """
                 Loss Statistics
             """
-            train_loader.set_postfix(losses='Epoch: {epoch} \tGenerator loss: {e_gloss:.3f}\tCritic loss: {e_closs:.3f}')
-            train_loader.set_postfix(penalties='tfake: {e_cfloss:.3f}\treal: {e_crloss:.3f}\tpenalty: {e_cploss:.3f}')
             torch.cuda.empty_cache()
             #(deprecated)if epoch % display_step == 0:
              #(deprecated)   print(f"Epoch {epoch}/{epochs} | Generator loss: {e_gloss:.3f} | Critic loss: {e_closs:.3f}")
