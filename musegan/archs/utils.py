@@ -56,4 +56,4 @@ class Reshape(nn.Module):
             Preprocessed input batch.
 
         """
-        return x.view(x.size(0), *self.shape)
+        return x.view(x.size(0), -1)
