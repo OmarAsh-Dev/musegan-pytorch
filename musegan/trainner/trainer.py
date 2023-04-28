@@ -71,6 +71,7 @@ class Trainer():
     def train(
         self,
         dataloader: Iterable,
+        start_epoch: int = 0,
         epochs: int = 500,
         batch_size: int = 64,
         repeat: int = 5,
@@ -94,7 +95,7 @@ class Trainer():
             "crloss": [],
             "cploss": [],
         }
-        for epoch in range(epochs):
+        for epoch in range(start_epoch, epochs):
             e_gloss = 0
             e_cfloss = 0
             e_crloss = 0
