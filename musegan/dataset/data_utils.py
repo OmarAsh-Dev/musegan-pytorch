@@ -15,6 +15,7 @@ from music21 import note, stream, duration, tempo
 
 class LPDDataset(Dataset):
     """LPDDataset.
+    Multitrack
 
     Parameters
     ----------
@@ -53,6 +54,7 @@ class LPDDataset(Dataset):
 
 class MidiDataset(Dataset):
     """MidiDataset.
+    One track
 
     Parameters
     ----------
