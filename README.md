@@ -1,6 +1,7 @@
 MuseGAN
 =========
 A Pytorch implementation of MuseGAN
+Only linux BSD support due to SharedArray usage
 
 :star: Star this project on GitHub — it helps!
 
