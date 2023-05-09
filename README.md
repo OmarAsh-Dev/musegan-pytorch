@@ -3,7 +3,10 @@ MuseGAN
 A Pytorch implementation of MuseGAN
 Only linux BSD support due to SharedArray usage
 
-:star: Star this project on GitHub — it helps!
+
+![PyPI - License](https://img.shields.io/pypi/l/musegan)
+[![PyPI](https://img.shields.io/pypi/v/musegan)](https://pypi.org/project/musegan/)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/musegan)
 
 [MuseGAN](https://arxiv.org/abs/1709.06298) is a generative model which allows to
 generate music.
