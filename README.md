@@ -1,12 +1,14 @@
 MuseGAN
 =========
+![PyPI - License](https://img.shields.io/pypi/l/musegan)
+[![PyPI](https://img.shields.io/pypi/v/musegan)](https://pypi.org/project/musegan/)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/musegan)
+
 - A Pytorch implementation of MuseGAN
 - ***Note :*** Only linux BSD support due to SharedArray usage which is a linux only pip package
 
 
-![PyPI - License](https://img.shields.io/pypi/l/musegan)
-[![PyPI](https://img.shields.io/pypi/v/musegan)](https://pypi.org/project/musegan/)
-![PyPI - Downloads](https://img.shields.io/pypi/dw/musegan)
+
 
 [MuseGAN](https://arxiv.org/abs/1709.06298) is a generative model which allows to
 generate music.
@@ -24,7 +26,7 @@ There are two ways of using the musegan package;
    - Open your local Terminal/Command Shell and run the following commands
     ```shell
     cd musegan-pytorch # change directory to the cloned repository
-    #use any of the following some willl work dependent on your operating system
+    #use any of the following some will work dependent on your operating system
     #try
     python3 setup.py develop
     #or
