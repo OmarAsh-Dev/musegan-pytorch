@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'musegan',         # How you named your package folder (MyLib)
   packages = ['musegan'],   # Chose the same as "name"
-  version = '0.0.5',      # Start with a small number and increase it with every change you make
+  version = '0.0.6',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'A pytorch implimentation of musegan by forked from: https://github.com/salu133445',   # Give a short description about your library
   author = 'clifford njoroge',                   # Type in your name
