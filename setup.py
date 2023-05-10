@@ -9,7 +9,7 @@ setup(
   #packages = ['musegan'],   # Choose the same as "name"
   version = '0.1.0',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
-  description='A pytorch implementation of musegan '
+  description='A pytorch implementation of musegan',
   long_description = long_description,
   long_description_content_type = "text/markdown",
   author = 'Clifford Njoroge',                   # Type in your name
